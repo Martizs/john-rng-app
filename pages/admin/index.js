@@ -3,6 +3,13 @@ import Link from 'next/link';
 import axios from 'axios';
 
 export default function Admin() {
+    useEffect(() => {
+        axios
+            .get('/api/hello')
+            .then((res) => console.log('res', res))
+            .catch((err) => console.log('err', err));
+    }, []);
+
     return (
         <div>
             welcome to admin page
