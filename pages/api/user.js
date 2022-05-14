@@ -7,7 +7,9 @@ import User from 'models/User';
 export default async (req, res) => {
     const { method } = req;
 
+    console.log('db connection started');
     await dbConnect();
+    console.log('db connection done succesffully');
 
     switch (method) {
         case 'GET':
