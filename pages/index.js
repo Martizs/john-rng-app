@@ -1,6 +1,13 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  return <div className={styles.container}>Welcome testing CD</div>;
+    return (
+        <div className={styles.container}>
+            <Link href="/admin">
+                <a>go to admin</a>
+            </Link>
+        </div>
+    );
 }
