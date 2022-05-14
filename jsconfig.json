@@ -2,5 +2,7 @@
 {
     "compilerOptions": {
         "baseUrl": "."
-    }
+    },
+    "exclude": ["node_modules"],
+    "include": ["next-env.d.ts", "**/*.js", "**/*.jsx"]
 }
