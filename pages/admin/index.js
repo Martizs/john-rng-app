@@ -5,7 +5,7 @@ import axios from 'axios';
 export default function Admin() {
     useEffect(() => {
         axios
-            .get('/api/hello')
+            .get('/api/user')
             .then((res) => console.log('res', res))
             .catch((err) => console.log('err', err));
     }, []);
