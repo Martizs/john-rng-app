@@ -9,7 +9,7 @@ export default async (req, res) => {
 
     console.log('db connection started');
     await dbConnect();
-    console.log('db connection done succesffully');
+    console.log('db connection done succesffullyz');
 
     switch (method) {
         case 'GET':
