@@ -1,4 +1,5 @@
 {
     "javascript.preferences.importModuleSpecifier": "shortest",
-    "javascript.preferences.importModuleSpecifierEnding": "minimal"
+    "javascript.preferences.importModuleSpecifierEnding": "minimal",
+    "css.lint.validProperties": ["composes"]
 }
