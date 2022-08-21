@@ -1,4 +1,4 @@
-import Layout from 'components/layout';
+import Layout from 'components/Layout';
 import { AuthContext } from 'hooks/authContext';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
