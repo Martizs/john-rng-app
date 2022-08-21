@@ -1,0 +1,15 @@
+.container {
+    background-color: #28282b;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container:hover {
+    cursor: pointer;
+    background-color: #4c4646;
+}
+
+.container:active {
+    background-color: rgba(76, 70, 70, 0.4);
+}
