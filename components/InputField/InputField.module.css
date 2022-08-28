@@ -1,8 +1,10 @@
 .container {
     composes: mainBackground from '../../styles/colors.css';
+    composes: mainFont from '../../styles/font.css';
     font-size: 20px;
     padding: 10px;
     color: #fff;
     border: 1px solid #e2dfd2;
     border-radius: 5px;
+    width: 100%;
 }
