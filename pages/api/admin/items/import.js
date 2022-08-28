@@ -13,7 +13,6 @@ export const config = {
 export default authedSession({
     post: async (req, res) => {
         const itemData = [];
-
         await new Promise((resolve, reject) => {
             const form = new formidable.IncomingForm();
 
