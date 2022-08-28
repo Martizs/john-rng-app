@@ -11,18 +11,24 @@ export default authedSession({
             searchObject.title = { $regex: search, $options: 'i' };
         }
 
-        let itemQuery = Item.find(searchObject).sort({ createdAt: -1 });
+        let itemQuery = Item.find(searchObject).sort({
+            createdAt: -1,
+            title: 1,
+        });
 
         let total = 0;
         if (page !== undefined && pageSize !== undefined) {
             total = await Item.find(searchObject).countDocuments();
             itemQuery = itemQuery
-                .limit(pageSize)
+                .limit(parseInt(pageSize))
                 .skip(parseInt(page) * parseInt(pageSize));
         }
 
+        const data = await itemQuery
+            .select('_id title description adminDescription')
+            .lean();
         res.send({
-            data: await itemQuery,
+            data,
             total,
         });
     },

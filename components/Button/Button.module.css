@@ -6,6 +6,7 @@
 
 .container:hover {
     cursor: pointer;
+    text-decoration: none;
 }
 
 .generic {

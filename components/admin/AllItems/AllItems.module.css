@@ -4,8 +4,21 @@
 }
 
 .buttonContainer {
-    composes: buttonWidth from '../../../styles/widths.css';
+    display: flex;
     margin: 0 auto 10px auto;
+    padding: 0 10px;
+    min-width: 200px;
+    max-width: 600px;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.buttonWrapper {
+    composes: buttonWidth from '../../../styles/widths.css';
+}
+
+.linkWrapper {
+    display: flex;
 }
 
 .listContainer {

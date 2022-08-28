@@ -11,6 +11,8 @@ import styles from './AllItems.module.css';
 const pageSize = 10;
 
 export const AllItems = () => {
+    const hiddenFileInput = useRef(null);
+
     const searchTerm = useRef();
     const [currPage, setCurrPage] = useState(0);
 
@@ -89,15 +91,54 @@ export const AllItems = () => {
 
     const debouncedSearch = useMemo(() => debounce(onSearch, 500), []);
 
+    const handleFileChange = (event) => {
+        const formData = new FormData();
+
+        formData.append('file', event.target.files[0]);
+
+        axios
+            .post('/api/admin/items/import', formData, {
+                headers: { 'content-type': 'multipart/form-data' },
+            })
+            .then(() => {
+                loadItems({});
+            })
+            .catch(showError);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.buttonContainer}>
-                <Button
-                    title="Add item"
-                    onClick={() => handleShowItem({})}
-                    type="success"
-                />
+                <div className={styles.buttonWrapper}>
+                    <Button
+                        title="Add item"
+                        onClick={() => handleShowItem({})}
+                        type="success"
+                    />
+                </div>
+                <div>
+                    <Button
+                        title="Import csv"
+                        onClick={() => {
+                            hiddenFileInput.current.click();
+                        }}
+                    />
+                    <input
+                        type="file"
+                        ref={hiddenFileInput}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
+                </div>
+                <div className={styles.linkWrapper}>
+                    <Button
+                        href={`/api/admin/items/export?search=${searchTerm.current}`}
+                        isLink
+                        title="Export csv"
+                    />
+                </div>
             </div>
+
             <div className={styles.listContainer}>
                 <ItemList
                     items={itemData.data}
