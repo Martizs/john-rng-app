@@ -71,7 +71,7 @@ export const AllItems = () => {
             <div className={styles.listContainer}>
                 <ItemList
                     items={items}
-                    onSearch={(e) => console.log('search', e.target.value)}
+                    // onSearch={(e) => console.log('search', e.target.value)}
                     onItemClick={handleShowItem}
                     onItemDelete={onDelete}
                 />

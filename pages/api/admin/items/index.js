@@ -11,7 +11,12 @@ export default authedSession({
             searchObject.title = { $regex: search, $options: 'i' };
         }
 
-        res.send(await Item.find(searchObject).limit(pageSize).skip(page));
+        res.send(
+            await Item.find(searchObject)
+                .sort({ createdAt: -1 })
+                .limit(pageSize)
+                .skip(page)
+        );
     },
     post: async (req, res) => {
         const { title, description, adminDescription } = req.body;
