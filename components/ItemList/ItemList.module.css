@@ -1,0 +1,14 @@
+.container {
+    border: 2px solid rgba(76, 70, 70, 1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.listContainer {
+    padding-top: 10px;
+}
+
+.noItemsLabel {
+    text-align: center;
+    color: #808080;
+}

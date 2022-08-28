@@ -1,6 +1,5 @@
 import { withSession } from 'lib/api/utils';
 import { InvalidCredentials } from 'lib/consts/errorMessages';
-import { comparePass } from 'lib/utils';
 import User from 'models/User';
 
 export default withSession({
@@ -11,13 +10,7 @@ export default withSession({
             username,
         }).select('_id password');
 
-        if (!user) {
-            throw Error(InvalidCredentials);
-        }
-
-        const correct = await comparePass(password, user.password);
-
-        if (!correct) {
+        if (!user || !(await user.comparePassword(password))) {
             throw Error(InvalidCredentials);
         }
 

@@ -1,0 +1,11 @@
+.container {
+}
+
+.navContainer {
+    padding: 40px 0;
+}
+
+.logoutContainer {
+    display: flex;
+    justify-content: flex-end;
+}

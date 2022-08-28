@@ -1,5 +1,4 @@
 .container {
-    background-color: #28282b;
     text-align: center;
     padding: 10px;
     border-radius: 5px;
@@ -7,9 +6,40 @@
 
 .container:hover {
     cursor: pointer;
+}
+
+.generic {
+    background-color: #28282b;
+}
+
+.generic:hover {
     background-color: #4c4646;
 }
 
-.container:active {
+.generic:active {
     background-color: rgba(76, 70, 70, 0.4);
+}
+
+.success {
+    background-color: #8ccd79;
+}
+
+.success:hover {
+    background-color: rgba(140, 205, 121, 0.7);
+}
+
+.success:active {
+    background-color: rgba(140, 205, 121, 0.4);
+}
+
+.error {
+    background-color: #ff6666;
+}
+
+.error:hover {
+    background-color: rgba(255, 102, 102, 0.7);
+}
+
+.error:active {
+    background-color: rgba(255, 102, 102, 0.4);
 }

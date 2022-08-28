@@ -1,0 +1,16 @@
+.container {
+    border: 2px solid rgba(76, 70, 70, 1);
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.container:hover {
+    cursor: pointer;
+    background-color: rgba(76, 70, 70, 0.7);
+}
+
+.title {
+    width: 100%;
+    margin: auto 10px auto 0;
+}
