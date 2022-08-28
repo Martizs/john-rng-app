@@ -3,7 +3,7 @@ import Item from 'models/Item';
 
 export default authedSession({
     get: async (req, res) => {
-        const { search, page = 0, pageSize = 15 } = req.query;
+        const { search, page, pageSize } = req.query;
 
         const searchObject = {};
 
@@ -11,12 +11,20 @@ export default authedSession({
             searchObject.title = { $regex: search, $options: 'i' };
         }
 
-        res.send(
-            await Item.find(searchObject)
-                .sort({ createdAt: -1 })
+        let itemQuery = Item.find(searchObject).sort({ createdAt: -1 });
+
+        let total = 0;
+        if (page !== undefined && pageSize !== undefined) {
+            total = await Item.find(searchObject).countDocuments();
+            itemQuery = itemQuery
                 .limit(pageSize)
-                .skip(page)
-        );
+                .skip(parseInt(page) * parseInt(pageSize));
+        }
+
+        res.send({
+            data: await itemQuery,
+            total,
+        });
     },
     post: async (req, res) => {
         const { title, description, adminDescription } = req.body;

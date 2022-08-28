@@ -1,7 +1,11 @@
-.container {
-    border: 2px solid rgba(76, 70, 70, 1);
-    border-radius: 5px;
+.mainContainer {
     padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
 }
 
 .listContainer {
@@ -11,4 +15,30 @@
 .noItemsLabel {
     text-align: center;
     color: #808080;
+}
+
+.paginationContainer {
+    display: flex;
+    list-style-type: none;
+    padding: 0 20px;
+    margin: 10px auto 0 auto;
+}
+
+.paginationItem {
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.paginationItem:hover {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #4c4646;
+}
+
+.paginationItem:active {
+    background-color: rgba(76, 70, 70, 0.4);
+}
+
+.activePaginationItem {
+    background-color: #28282b;
 }
