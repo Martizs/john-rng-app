@@ -1,24 +1,40 @@
 import axios from 'axios';
+import queryString from 'query-string';
 import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
 import { ItemModal } from 'components/ItemModal';
 import { showError } from 'lib/ui/utils';
-import { useEffect, useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AllItems.module.css';
 
+const pageSize = 10;
+
 export const AllItems = () => {
-    const [items, setItems] = useState([]);
+    const searchTerm = useRef();
+    const [currPage, setCurrPage] = useState(0);
+
+    const [itemData, setItemData] = useState({
+        data: [],
+        total: 0,
+    });
     const [showItem, setShowItem] = useState(null);
     const currItem = useRef({});
 
     useEffect(() => {
-        loadItems();
+        loadItems({});
+
+        return () => {
+            debouncedSearch.cancel();
+        };
     }, []);
 
-    const loadItems = () => {
+    const loadItems = ({ page = currPage, search = searchTerm.current }) => {
+        const query = queryString.stringify({ page, search, pageSize });
+
         axios
-            .get('/api/admin/items')
-            .then((resp) => setItems(resp.data))
+            .get(`/api/admin/items?${query}`)
+            .then((resp) => setItemData(resp.data))
             .catch(showError);
     };
 
@@ -45,7 +61,7 @@ export const AllItems = () => {
         axios[method]('/api/admin/items', currItem.current)
             .then(() => {
                 handleCLose();
-                loadItems();
+                loadItems({});
             })
             .catch(showError);
     };
@@ -54,10 +70,24 @@ export const AllItems = () => {
         axios
             .delete(`/api/admin/items/${_id}`)
             .then(() => {
-                loadItems();
+                loadItems({});
             })
             .catch(showError);
     };
+
+    const onPageChange = ({ selected }) => {
+        setCurrPage(selected);
+        loadItems({ page: selected });
+    };
+
+    const onSearch = (e) => {
+        const value = e.target.value;
+        setCurrPage(0);
+        searchTerm.current = value;
+        loadItems({ page: 0, search: value });
+    };
+
+    const debouncedSearch = useMemo(() => debounce(onSearch, 500), []);
 
     return (
         <div className={styles.container}>
@@ -70,8 +100,12 @@ export const AllItems = () => {
             </div>
             <div className={styles.listContainer}>
                 <ItemList
-                    items={items}
-                    // onSearch={(e) => console.log('search', e.target.value)}
+                    items={itemData.data}
+                    pageCount={Math.ceil(itemData.total / pageSize)}
+                    onPageChange={onPageChange}
+                    showPagination={itemData.total > pageSize}
+                    page={currPage}
+                    onSearch={debouncedSearch}
                     onItemClick={handleShowItem}
                     onItemDelete={onDelete}
                 />
