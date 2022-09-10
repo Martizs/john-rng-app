@@ -2,11 +2,21 @@
     text-align: center;
     padding: 10px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.disabled {
+    pointer-events: none;
 }
 
 .container:hover {
     cursor: pointer;
     text-decoration: none;
+}
+
+.loadingContainer {
+    margin-right: 5px;
 }
 
 .generic {

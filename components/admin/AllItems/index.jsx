@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
 import { ItemModal } from 'components/ItemModal';
-import { showError } from 'lib/ui/utils';
+import { showError, showSuccess } from 'lib/ui/utils';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AllItems.module.css';
@@ -15,6 +15,7 @@ export const AllItems = () => {
 
     const searchTerm = useRef();
     const [currPage, setCurrPage] = useState(0);
+    const [loadingImport, setLoadingImport] = useState(false);
 
     const [itemData, setItemData] = useState({
         data: [],
@@ -92,6 +93,7 @@ export const AllItems = () => {
     const debouncedSearch = useMemo(() => debounce(onSearch, 500), []);
 
     const handleFileChange = (event) => {
+        setLoadingImport(true);
         const formData = new FormData();
 
         formData.append('file', event.target.files[0]);
@@ -100,10 +102,23 @@ export const AllItems = () => {
             .post('/api/admin/items/import', formData, {
                 headers: { 'content-type': 'multipart/form-data' },
             })
-            .then(() => {
+            .then((resp) => {
+                const data = resp.data;
+                showSuccess(`Items inserted: ${data.docsInserted}`);
+
+                data.insertErrors.forEach((insertError) => {
+                    showError(
+                        `Insert failures: ${insertError.message}, count: ${insertError.count}`
+                    );
+                });
+
                 loadItems({});
             })
-            .catch(showError);
+            .catch(showError)
+            .finally(() => {
+                setLoadingImport(false);
+                event.target.value = null;
+            });
     };
 
     return (
@@ -119,6 +134,7 @@ export const AllItems = () => {
                 <div>
                     <Button
                         title="Import csv"
+                        loading={loadingImport}
                         onClick={() => {
                             hiddenFileInput.current.click();
                         }}
@@ -132,7 +148,9 @@ export const AllItems = () => {
                 </div>
                 <div className={styles.linkWrapper}>
                     <Button
-                        href={`/api/admin/items/export?search=${searchTerm.current}`}
+                        href={`/api/admin/items/export?${queryString.stringify({
+                            search: searchTerm.current,
+                        })}`}
                         isLink
                         title="Export csv"
                     />
