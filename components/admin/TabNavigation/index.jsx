@@ -1,9 +1,12 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './TabNavigation.module.css';
 
-const Tab = ({ href, isSelected, lastItem, firstItem, title }) => (
-    <Link href={href}>
-        <a
+const Tab = ({ href, isSelected, lastItem, firstItem, title }) => {
+    const router = useRouter();
+
+    return (
+        <div
+            onClick={() => router.push(href)}
             className={styles.tabItem}
             style={{
                 backgroundColor: isSelected
@@ -15,25 +18,23 @@ const Tab = ({ href, isSelected, lastItem, firstItem, title }) => (
             }}
         >
             {title}
-        </a>
-    </Link>
-);
+        </div>
+    );
+};
 
 export const TabNavigation = ({ selectedTab, tabs }) => {
     return (
         <div className={styles.container}>
-            <nav>
-                {tabs.map((tabItem, index) => (
-                    <Tab
-                        key={tabItem.key}
-                        href={`admin/?tab=${tabItem.key}`}
-                        title={tabItem.title}
-                        isSelected={selectedTab === tabItem.key}
-                        firstItem={index === 0}
-                        lastItem={index === tabs.length - 1}
-                    />
-                ))}
-            </nav>
+            {tabs.map((tabItem, index) => (
+                <Tab
+                    key={tabItem.key}
+                    href={`admin/?tab=${tabItem.key}`}
+                    title={tabItem.title}
+                    isSelected={selectedTab === tabItem.key}
+                    firstItem={index === 0}
+                    lastItem={index === tabs.length - 1}
+                />
+            ))}
         </div>
     );
 };

@@ -5,12 +5,15 @@
 
 .tabItem {
     font-size: 40px;
-    padding: 5px 50px 10px 50px;
+    padding-top: 5px;
+    padding-bottom: 10px;
     border-bottom: 1px solid;
     border-right: 1px solid;
+    width: 288px;
+    text-align: center;
 }
 
 .tabItem:hover {
-    text-decoration: none;
+    cursor: pointer;
     background-color: rgba(76, 70, 70, 0.4) !important;
 }
