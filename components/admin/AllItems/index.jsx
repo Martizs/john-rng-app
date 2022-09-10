@@ -132,7 +132,9 @@ export const AllItems = () => {
                 </div>
                 <div className={styles.linkWrapper}>
                     <Button
-                        href={`/api/admin/items/export?search=${searchTerm.current}`}
+                        href={`/api/admin/items/export?${queryString.stringify({
+                            search: searchTerm.current,
+                        })}`}
                         isLink
                         title="Export csv"
                     />
