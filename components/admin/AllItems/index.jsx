@@ -16,6 +16,7 @@ export const AllItems = () => {
     const searchTerm = useRef();
     const [currPage, setCurrPage] = useState(0);
     const [loadingImport, setLoadingImport] = useState(false);
+    const [loadingItems, setLoadingItems] = useState(false);
 
     const [itemData, setItemData] = useState({
         data: [],
@@ -33,12 +34,17 @@ export const AllItems = () => {
     }, []);
 
     const loadItems = ({ page = currPage, search = searchTerm.current }) => {
+        setLoadingItems(true);
+
         const query = queryString.stringify({ page, search, pageSize });
 
         axios
             .get(`/api/admin/items?${query}`)
             .then((resp) => setItemData(resp.data))
-            .catch(showError);
+            .catch(showError)
+            .finally(() => {
+                setLoadingItems(false);
+            });
     };
 
     const onItemChange = (valueObj) => {
@@ -159,6 +165,7 @@ export const AllItems = () => {
 
             <div className={styles.listContainer}>
                 <ItemList
+                    loading={loadingItems}
                     items={itemData.data}
                     pageCount={Math.ceil(itemData.total / pageSize)}
                     onPageChange={onPageChange}
