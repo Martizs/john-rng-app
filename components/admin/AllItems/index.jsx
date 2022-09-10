@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
 import { ItemModal } from 'components/ItemModal';
-import { showError } from 'lib/ui/utils';
+import { showError, showSuccess } from 'lib/ui/utils';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AllItems.module.css';
@@ -100,10 +100,22 @@ export const AllItems = () => {
             .post('/api/admin/items/import', formData, {
                 headers: { 'content-type': 'multipart/form-data' },
             })
-            .then(() => {
+            .then((resp) => {
+                const data = resp.data;
+                showSuccess(`Items inserted: ${data.docsInserted}`);
+
+                data.insertErrors.forEach((insertError) => {
+                    showError(
+                        `Insert failures: ${insertError.message}, count: ${insertError.count}`
+                    );
+                });
+
                 loadItems({});
             })
-            .catch(showError);
+            .catch(showError)
+            .finally(() => {
+                event.target.value = null;
+            });
     };
 
     return (
