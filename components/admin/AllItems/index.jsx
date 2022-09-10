@@ -2,11 +2,11 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
-import { ItemModal } from 'components/ItemModal';
 import { showError, showSuccess } from 'lib/ui/utils';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AllItems.module.css';
+import { InputField } from 'components/InputField';
 
 const pageSize = 10;
 
@@ -17,13 +17,12 @@ export const AllItems = () => {
     const [currPage, setCurrPage] = useState(0);
     const [loadingImport, setLoadingImport] = useState(false);
     const [loadingItems, setLoadingItems] = useState(false);
+    const [createItem, setCreateItem] = useState(false);
 
     const [itemData, setItemData] = useState({
         data: [],
         total: 0,
     });
-    const [showItem, setShowItem] = useState(null);
-    const currItem = useRef({});
 
     useEffect(() => {
         loadItems({});
@@ -45,34 +44,6 @@ export const AllItems = () => {
             .finally(() => {
                 setLoadingItems(false);
             });
-    };
-
-    const onItemChange = (valueObj) => {
-        currItem.current = {
-            ...currItem.current,
-            ...valueObj,
-        };
-    };
-
-    const handleShowItem = (item) => {
-        currItem.current = item;
-        setShowItem(item);
-    };
-
-    const handleCLose = () => {
-        currItem.current = {};
-        setShowItem(null);
-    };
-
-    const onSave = () => {
-        const method = currItem.current._id ? 'put' : 'post';
-
-        axios[method]('/api/admin/items', currItem.current)
-            .then(() => {
-                handleCLose();
-                loadItems({});
-            })
-            .catch(showError);
     };
 
     const onDelete = (_id) => {
@@ -133,7 +104,7 @@ export const AllItems = () => {
                 <div className={styles.buttonWrapper}>
                     <Button
                         title="Add item"
-                        onClick={() => handleShowItem({})}
+                        onClick={() => setCreateItem(true)}
                         type="success"
                     />
                 </div>
@@ -164,26 +135,27 @@ export const AllItems = () => {
             </div>
 
             <div className={styles.listContainer}>
+                <div className={styles.searchInput}>
+                    <InputField
+                        placeholder="Search"
+                        onChange={debouncedSearch}
+                    />
+                </div>
+
                 <ItemList
-                    listHeight="630px"
+                    listHeight="650px"
                     loading={loadingItems}
                     items={itemData.data}
                     pageCount={Math.ceil(itemData.total / pageSize)}
                     onPageChange={onPageChange}
                     showPagination={itemData.total > pageSize}
                     page={currPage}
-                    onSearch={debouncedSearch}
-                    onItemClick={handleShowItem}
                     onItemDelete={onDelete}
+                    createItem={createItem}
+                    onItemSave={() => loadItems({})}
+                    resetCreate={() => setCreateItem(false)}
                 />
             </div>
-            <ItemModal
-                isOpen={!!showItem}
-                onClose={handleCLose}
-                item={showItem}
-                onChange={onItemChange}
-                onSave={onSave}
-            />
         </div>
     );
 };
