@@ -14,11 +14,12 @@ export const ItemList = ({
     onItemClick,
     onItemDelete,
     loading,
+    listHeight,
 }) => (
     <div className={styles.container}>
         <div className={styles.mainContainer}>
             <InputField placeholder="Search" onChange={onSearch} />
-            <div className={styles.loadingListContainer}>
+            <div style={{ height: listHeight }}>
                 {loading ? (
                     <div className={styles.loadingIconContainer}>
                         <LoadingIcon width={200} height={200} />

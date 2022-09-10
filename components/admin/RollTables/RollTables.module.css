@@ -1,5 +1,35 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.addTableButtonContainer {
+    width: 200px;
+}
+
+.tablesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
+
+.addModalContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 400px;
+    justify-content: space-between;
+}
+
+.rollTableContainer {
+    border: 1px solid #e2dfd2;
+    border-radius: 5px;
+}
+
+.rollTableTitle {
+    border-bottom: 1px solid #e2dfd2;
+    text-align: center;
+    padding: 10px 0;
 }

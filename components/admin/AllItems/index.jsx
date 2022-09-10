@@ -165,6 +165,7 @@ export const AllItems = () => {
 
             <div className={styles.listContainer}>
                 <ItemList
+                    listHeight="630px"
                     loading={loadingItems}
                     items={itemData.data}
                     pageCount={Math.ceil(itemData.total / pageSize)}
