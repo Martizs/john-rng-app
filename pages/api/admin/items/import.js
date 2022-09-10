@@ -57,6 +57,8 @@ export default authedSession({
             });
             docsInserted = itemData.length;
         } catch (error) {
+            docsInserted = error.insertedDocs.length;
+
             error.writeErrors.forEach((writeError) => {
                 let errorKey = writeError.err.errmsg;
 
