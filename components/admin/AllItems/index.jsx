@@ -15,6 +15,7 @@ export const AllItems = () => {
 
     const searchTerm = useRef();
     const [currPage, setCurrPage] = useState(0);
+    const [loadingImport, setLoadingImport] = useState(false);
 
     const [itemData, setItemData] = useState({
         data: [],
@@ -92,6 +93,7 @@ export const AllItems = () => {
     const debouncedSearch = useMemo(() => debounce(onSearch, 500), []);
 
     const handleFileChange = (event) => {
+        setLoadingImport(true);
         const formData = new FormData();
 
         formData.append('file', event.target.files[0]);
@@ -114,6 +116,7 @@ export const AllItems = () => {
             })
             .catch(showError)
             .finally(() => {
+                setLoadingImport(false);
                 event.target.value = null;
             });
     };
@@ -131,6 +134,7 @@ export const AllItems = () => {
                 <div>
                     <Button
                         title="Import csv"
+                        loading={loadingImport}
                         onClick={() => {
                             hiddenFileInput.current.click();
                         }}
