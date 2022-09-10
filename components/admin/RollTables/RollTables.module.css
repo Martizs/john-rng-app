@@ -5,14 +5,8 @@
     align-items: center;
 }
 
-.addTableButtonContainer {
+.addCreateButtonContainer {
     width: 200px;
-}
-
-.tablesContainer {
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 20px;
 }
 
 .addModalContainer {
@@ -23,13 +17,15 @@
     justify-content: space-between;
 }
 
-.rollTableContainer {
-    border: 1px solid #e2dfd2;
-    border-radius: 5px;
+.addItemContainer {
+    width: 100%;
+    margin-top: 10px;
 }
 
-.rollTableTitle {
-    border-bottom: 1px solid #e2dfd2;
-    text-align: center;
-    padding: 10px 0;
+.tablesContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    width: 100%;
 }

@@ -1,0 +1,29 @@
+.rollTableContainer {
+    border: 1px solid #e2dfd2;
+    border-radius: 5px;
+    min-width: 300px;
+    width: 50%;
+}
+
+.rollTableTitle {
+    border-bottom: 1px solid #e2dfd2;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+}
+
+.createAddContainer {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.addCreateButtonContainer {
+    width: 200px;
+}
+
+.addItemContainer {
+    width: 100%;
+    margin-top: 10px;
+}

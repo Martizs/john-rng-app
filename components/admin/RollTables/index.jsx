@@ -2,8 +2,8 @@ import axios from 'axios';
 import { Button } from 'components/Button';
 import { LoadingIcon } from 'components/Icons/LoadingIcon';
 import { InputField } from 'components/InputField';
-import { ItemList } from 'components/ItemList';
 import { Modal } from 'components/Modal';
+import { RollTable } from 'components/RollTable';
 import { showError } from 'lib/ui/utils';
 import { useEffect, useRef, useState } from 'react';
 import styles from './RollTables.module.css';
@@ -11,12 +11,39 @@ import styles from './RollTables.module.css';
 export const RollTables = () => {
     const [createTable, setCreatetable] = useState(false);
     const [rollTables, setRollTables] = useState([]);
+    const [allItems, setAllItems] = useState([]);
     const [loadingTables, setLoadingTables] = useState(false);
     const createTitle = useRef();
 
     useEffect(() => {
-        loadRollTables();
+        loadInitalData();
     }, []);
+
+    const loadInitalData = async () => {
+        setLoadingTables(true);
+
+        try {
+            const rollTablesResp = await axios.get('/api/admin/rollTables');
+            setRollTables(rollTablesResp.data);
+
+            const allItemsResp = await axios.get('/api/admin/items');
+
+            setAllItems(
+                allItemsResp.data.data.map((item) => ({
+                    value: item._id,
+                    label: item.title,
+                    title: item.title,
+                    _id: item._id,
+                    description: item.description,
+                    adminDescription: item.adminDescription,
+                }))
+            );
+        } catch (error) {
+            showError(error);
+        } finally {
+            setLoadingTables(false);
+        }
+    };
 
     const onCreate = () => {
         axios
@@ -33,7 +60,7 @@ export const RollTables = () => {
         setCreatetable(false);
     };
 
-    const loadRollTables = () => {
+    const loadRollTables = async () => {
         setLoadingTables(true);
         axios
             .get('/api/admin/rollTables')
@@ -44,13 +71,11 @@ export const RollTables = () => {
             });
     };
 
-    console.log('rollTables', rollTables);
-
     return (
         <div className={styles.container}>
-            <div className={styles.addTableButtonContainer}>
+            <div className={styles.addCreateButtonContainer}>
                 <Button
-                    title="Add table"
+                    title="Create table"
                     onClick={() => setCreatetable(true)}
                     type="success"
                 />
@@ -61,27 +86,13 @@ export const RollTables = () => {
             ) : (
                 <div className={styles.tablesContainer}>
                     {rollTables.map((rollTable) => (
-                        <div
+                        <RollTable
                             key={rollTable._id}
-                            className={styles.rollTableContainer}
-                        >
-                            <div className={styles.rollTableTitle}>
-                                {rollTable.title}
-                            </div>
-                            <ItemList
-                                items={rollTable.items || []}
-                                showPagination={false}
-                                onSearch={(event) =>
-                                    console.log('search', event.target.value)
-                                }
-                                onItemClick={(item) =>
-                                    console.log('item', item)
-                                }
-                                onItemDelete={(id) =>
-                                    console.log('delete id', id)
-                                }
-                            />
-                        </div>
+                            title={rollTable.title}
+                            _id={rollTable._id}
+                            initialTableItems={rollTable.items}
+                            allItems={allItems}
+                        />
                     ))}
                 </div>
             )}

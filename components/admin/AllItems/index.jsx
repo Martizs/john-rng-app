@@ -103,7 +103,7 @@ export const AllItems = () => {
             <div className={styles.buttonContainer}>
                 <div className={styles.buttonWrapper}>
                     <Button
-                        title="Add item"
+                        title="Create item"
                         onClick={() => setCreateItem(true)}
                         type="success"
                     />

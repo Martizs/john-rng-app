@@ -9,6 +9,10 @@ export default authedSession({
         res.status(200).send();
     },
     get: async (req, res) => {
-        res.status(200).send(await RollTable.find({}).populate('items').lean());
+        res.status(200).send(
+            await RollTable.find({})
+                .populate('items', null, null, { sort: { title: -1 } })
+                .lean()
+        );
     },
 });
