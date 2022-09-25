@@ -11,6 +11,7 @@ const customStyles = {
         backgroundColor: '#343434',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
+        maxWidth:"500px",
     },
 };
 

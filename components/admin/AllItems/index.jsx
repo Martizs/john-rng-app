@@ -101,20 +101,22 @@ export const AllItems = () => {
     return (
         <div className={styles.container}>
             <div className={styles.buttonContainer}>
-                <div className={styles.buttonWrapper}>
+                <div className={styles.linkWrapper}>
                     <Button
                         title="Create item"
                         onClick={() => setCreateItem(true)}
                         type="success"
+                        meniu
                     />
                 </div>
-                <div>
+                <div className={styles.linkWrapper}>
                     <Button
                         title="Import csv"
                         loading={loadingImport}
                         onClick={() => {
                             hiddenFileInput.current.click();
                         }}
+                        meniu
                     />
                     <input
                         type="file"
@@ -130,6 +132,7 @@ export const AllItems = () => {
                         })}`}
                         isLink
                         title="Export csv"
+                        meniu
                     />
                 </div>
             </div>

@@ -31,3 +31,21 @@
 .searchInput {
     padding: 10px 10px 0 10px;
 }
+
+@media (max-width: 800px) {
+    .buttonContainer{
+        flex-direction: column;
+    }
+
+    .buttonWrapper {
+        width: 100%;
+    }
+
+    .linkWrapper{
+        width: 100%;
+    }
+
+    .btnClass{
+        width: 100%;
+    }
+  }

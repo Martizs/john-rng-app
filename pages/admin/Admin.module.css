@@ -9,3 +9,13 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.logoutBtn{
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.logoutBtn:hover {
+    cursor: pointer;
+    background-color: rgba(76, 70, 70, 0.4) !important;
+}

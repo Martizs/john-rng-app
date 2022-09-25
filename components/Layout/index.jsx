@@ -1,8 +1,9 @@
 import Head from 'next/head';
+import styles from './layout.module.css';
 
 export default function Layout({ children }) {
     return (
-        <div>
+        <div className={styles.container}>
             <Head>
                 <title>Johns Treasure Trove</title>
                 <meta
@@ -11,7 +12,8 @@ export default function Layout({ children }) {
                 />
                 <link rel="icon" href="/leprechauns_treasure.ico" />
             </Head>
-            {children}
+            <div className={styles.bgImg}></div>
+                {children}
         </div>
     );
 }
