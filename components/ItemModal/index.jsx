@@ -1,25 +1,9 @@
 import { Button } from 'components/Button';
 import { InputField } from 'components/InputField';
+import { Modal } from 'components/Modal';
 import { TextArea } from 'components/TextArea';
 import { useState } from 'react';
-import Modal from 'react-modal';
 import styles from './ItemModal.module.css';
-
-Modal.setAppElement('#__next');
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        backgroundColor: '#343434',
-        height: '600px',
-        width: '90%',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
 
 export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
     const [edit, setEdit] = useState(false);
@@ -38,7 +22,8 @@ export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
         <Modal
             isOpen={isOpen}
             onRequestClose={handleClose}
-            style={customStyles}
+            height="600px"
+            width="90%"
         >
             {item && (
                 <div className={styles.container}>

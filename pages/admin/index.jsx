@@ -8,6 +8,7 @@ import { useContext, useEffect, useMemo } from 'react';
 import styles from './Admin.module.css';
 import { Button } from 'components/Button';
 import { AllItems } from 'components/admin/AllItems';
+import { RollTables } from 'components/admin/RollTables';
 
 const TAB_TYPES = {
     allItems: {
@@ -50,7 +51,7 @@ export default function Admin() {
             case TAB_TYPES.allItems.key:
                 return <AllItems />;
             case TAB_TYPES.rollTables.key:
-                return <div>Roll tables div</div>;
+                return <RollTables />;
             case TAB_TYPES.roll.key:
                 return <div>Roll div</div>;
             default:

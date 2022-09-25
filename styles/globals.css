@@ -19,3 +19,12 @@ a:hover {
 * {
     box-sizing: border-box;
 }
+
+.bitch__option {
+    background-color: #343434 !important;
+}
+
+.bitch__option:hover {
+    cursor: pointer;
+    background-color: #4c4646 !important;
+}

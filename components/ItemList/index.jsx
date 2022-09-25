@@ -1,8 +1,11 @@
-import { InputField } from 'components/InputField';
 import { ListItem } from './components/ListItem';
 import styles from './ItemList.module.css';
 import ReactPaginate from 'react-paginate';
 import { LoadingIcon } from 'components/Icons/LoadingIcon';
+import { ItemModal } from 'components/ItemModal';
+import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { showError } from 'lib/ui/utils';
 
 export const ItemList = ({
     items,
@@ -10,15 +13,59 @@ export const ItemList = ({
     showPagination,
     page,
     onPageChange,
-    onSearch,
-    onItemClick,
     onItemDelete,
     loading,
-}) => (
-    <div className={styles.container}>
-        <div className={styles.mainContainer}>
-            <InputField placeholder="Search" onChange={onSearch} />
-            <div className={styles.loadingListContainer}>
+    listHeight,
+    createItem,
+    onItemSave,
+    resetCreate,
+}) => {
+    const [showItem, setShowItem] = useState(null);
+    const currItem = useRef({});
+
+    useEffect(() => {
+        if (createItem) {
+            handleShowItem({});
+        }
+    }, [createItem]);
+
+    const onItemChange = (valueObj) => {
+        currItem.current = {
+            ...currItem.current,
+            ...valueObj,
+        };
+    };
+
+    const handleShowItem = (item) => {
+        currItem.current = item;
+        setShowItem(item);
+    };
+
+    const onSave = () => {
+        const method = currItem.current._id ? 'put' : 'post';
+
+        axios[method]('/api/admin/items', currItem.current)
+            .then(() => {
+                handleCLose();
+                onItemSave();
+            })
+            .catch(showError);
+    };
+
+    const handleCLose = () => {
+        currItem.current = {};
+        if (createItem) {
+            resetCreate();
+        }
+        setShowItem(null);
+    };
+
+    return (
+        <div className={styles.container}>
+            <div
+                className={styles.mainContainer}
+                style={{ height: listHeight }}
+            >
                 {loading ? (
                     <div className={styles.loadingIconContainer}>
                         <LoadingIcon width={200} height={200} />
@@ -32,7 +79,7 @@ export const ItemList = ({
                                         key={item._id}
                                         title={item.title}
                                         tooltip={item.description}
-                                        onClick={() => onItemClick(item)}
+                                        onClick={() => handleShowItem(item)}
                                         onDelete={() => onItemDelete(item._id)}
                                     />
                                 ))}
@@ -45,24 +92,31 @@ export const ItemList = ({
                     </div>
                 )}
             </div>
-        </div>
-        {showPagination && (
-            <ReactPaginate
-                forcePage={page}
-                containerClassName={styles.paginationContainer}
-                breakLabel="..."
-                nextLabel=">"
-                breakLinkClassName={styles.paginationItem}
-                pageLinkClassName={styles.paginationItem}
-                previousLinkClassName={styles.paginationItem}
-                nextLinkClassName={styles.paginationItem}
-                activeLinkClassName={styles.activePaginationItem}
-                onPageChange={onPageChange}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
+            {showPagination && (
+                <ReactPaginate
+                    forcePage={page}
+                    containerClassName={styles.paginationContainer}
+                    breakLabel="..."
+                    nextLabel=">"
+                    breakLinkClassName={styles.paginationItem}
+                    pageLinkClassName={styles.paginationItem}
+                    previousLinkClassName={styles.paginationItem}
+                    nextLinkClassName={styles.paginationItem}
+                    activeLinkClassName={styles.activePaginationItem}
+                    onPageChange={onPageChange}
+                    pageRangeDisplayed={5}
+                    pageCount={pageCount}
+                    previousLabel="<"
+                    renderOnZeroPageCount={null}
+                />
+            )}
+            <ItemModal
+                isOpen={!!showItem}
+                onClose={handleCLose}
+                item={showItem}
+                onChange={onItemChange}
+                onSave={onSave}
             />
-        )}
-    </div>
-);
+        </div>
+    );
+};
