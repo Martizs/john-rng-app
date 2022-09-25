@@ -55,8 +55,8 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
                 // resetCreate={() => setCreateItem(false)}
                 items={tableItems}
                 showPagination={false}
-                onSearch={(event) => console.log('search', event.target.value)}
-                onItemDelete={(id) => console.log('delete id', id)}
+                // onSearch={(event) => console.log('search', event.target.value)}
+                // onItemDelete={(id) => console.log('delete id', id)}
             />
         </div>
     );
