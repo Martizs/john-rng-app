@@ -12,7 +12,7 @@ export default function Layout({ children }) {
                 />
                 <link rel="icon" href="/leprechauns_treasure.ico" />
             </Head>
-            <div className={styles.bgImg}></div>
+            <div className={styles.bgImg}/>
                 {children}
         </div>
     );
