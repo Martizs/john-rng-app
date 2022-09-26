@@ -73,12 +73,11 @@ export const RollTables = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.addCreateButtonContainer}>
-                <Button
-                    title="Create table"
-                    onClick={() => setCreatetable(true)}
-                    type="success"
-                />
+            <div className={styles.subMenuContainer}>
+                <div onClick={() => setCreatetable(true)} className={styles.subMenuItem}>
+                    <span >Create table</span>
+                </div>
+                
             </div>
 
             {loadingTables ? (

@@ -1,10 +1,11 @@
 .container {
-    border: 2px solid rgba(76, 70, 70, 1);
+    border: 1px solid #80808078;
     border-radius: 5px;
     padding: 4px 6px;
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.425);
 }
 .container:hover {
     cursor: pointer;
@@ -17,4 +18,9 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.deleteIcon{
+    width: 20px;
+    filter: invert(35%) sepia(40%) saturate(2476%);
 }

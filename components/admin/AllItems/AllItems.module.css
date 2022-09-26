@@ -3,6 +3,31 @@
     flex-direction: column;
 }
 
+.subMenuContainer{
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #80808078;
+    border-bottom: 1px solid #80808078;
+}
+
+.subMenuItem {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-right: none !important;
+    width: 288px;
+    text-align: center;
+}
+
+.subMenuItem:hover {
+    cursor: pointer;
+    background-color: rgba(76, 70, 70, 0.4) !important;
+}
+
+
 .buttonContainer {
     display: flex;
     margin: 0 auto 10px auto;
@@ -22,14 +47,21 @@
 }
 
 .listContainer {
-    margin: 0 auto;
+    background-color: rgba(128, 128, 128, 0.144);
+    margin: 2rem auto;
     width: 100%;
     max-width: 600px;
     min-width: 200px;
+    padding-top: 1rem;
+    border: 1px solid #80808078;
 }
 
 .searchInput {
     padding: 10px 10px 0 10px;
+}
+
+.exportLink {
+    text-decoration: none !important;
 }
 
 @media (max-width: 800px) {
@@ -48,4 +80,17 @@
     .btnClass{
         width: 100%;
     }
+
+    .subMenuContainer{
+        width: 100%;
+    }
+
+    .subMenuItem{
+        width: 100%;
+    }
+    
+    .listContainer {
+    width: 100%;
+    max-width: 800px;
+    }      
   }

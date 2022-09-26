@@ -1,8 +1,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .addCreateButtonContainer {
@@ -28,4 +26,30 @@
     flex-wrap: wrap;
     padding-top: 20px;
     width: 100%;
+}
+
+
+.subMenuItem:hover {
+    cursor: pointer;
+    background-color: rgba(76, 70, 70, 0.4) !important;
+}
+
+
+.subMenuContainer{
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #80808078;
+    border-bottom: 1px solid #80808078;
+}
+
+.subMenuItem {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-right: none !important;
+    width: 288px;
+    text-align: center;
 }

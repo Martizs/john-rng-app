@@ -1,12 +1,14 @@
 .rollTableContainer {
-    border: 1px solid #e2dfd2;
-    border-radius: 5px;
+    border: 1px solid #80808078;
     min-width: 300px;
+    max-width: 500px;
+    margin: 0.2rem;
     width: 50%;
+    background-color: rgba(128, 128, 128, 0.144);
 }
 
 .rollTableTitle {
-    border-bottom: 1px solid #e2dfd2;
+    background-color: rgba(128, 128, 128, 0.418);
     text-align: center;
     padding: 10px 0;
     font-size: 20px;
@@ -27,3 +29,10 @@
     width: 100%;
     margin-top: 10px;
 }
+
+@media (max-width: 800px) {
+    .rollTableContainer {
+        margin: 0.2rem;
+        width: 100%;
+    }
+  }
