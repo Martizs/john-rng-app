@@ -106,7 +106,7 @@ export const AllItems = () => {
                         title="Create item"
                         onClick={() => setCreateItem(true)}
                         type="success"
-                        meniu
+                        menu
                     />
                 </div>
                 <div className={styles.linkWrapper}>
@@ -116,7 +116,7 @@ export const AllItems = () => {
                         onClick={() => {
                             hiddenFileInput.current.click();
                         }}
-                        meniu
+                        menu
                     />
                     <input
                         type="file"
@@ -132,7 +132,7 @@ export const AllItems = () => {
                         })}`}
                         isLink
                         title="Export csv"
-                        meniu
+                        menu
                     />
                 </div>
             </div>

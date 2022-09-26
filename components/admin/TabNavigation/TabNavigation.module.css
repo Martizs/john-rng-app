@@ -9,14 +9,13 @@
     font-size: 40px;
     padding-top: 5px;
     padding-bottom: 10px;
-    border-right: none !important;
     width: 288px;
     text-align: center;
 }
 
 .tabItem:hover {
     cursor: pointer;
-    background-color: rgba(76, 70, 70, 0.4) !important;
+    background-color: rgba(76, 70, 70, 0.4);
 }
 
 @media (max-width: 800px) {
