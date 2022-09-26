@@ -34,5 +34,6 @@
     .rollTableContainer {
         margin: 0.2rem;
         width: 100%;
+        max-width:none;
     }
   }
