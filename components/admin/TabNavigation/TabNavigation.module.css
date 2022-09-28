@@ -1,19 +1,29 @@
 .container {
     display: flex;
     justify-content: center;
+    border-top: 1px solid #80808078;
+    border-bottom: 1px solid #80808078;
 }
 
 .tabItem {
     font-size: 40px;
     padding-top: 5px;
     padding-bottom: 10px;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
     width: 288px;
     text-align: center;
 }
 
 .tabItem:hover {
     cursor: pointer;
-    background-color: rgba(76, 70, 70, 0.4) !important;
+    background-color: rgba(76, 70, 70, 0.4);
 }
+
+@media (max-width: 800px) {
+    .container{
+        width: 100%;
+        flex-direction: column;
+    }
+    .tabItem {
+        width: 100%;
+    }
+  }

@@ -27,3 +27,12 @@
     composes: buttonWidth from '../../styles/widths.css';
     margin: 5px;
 }
+@media (max-width: 800px) {
+    .buttonContainer{
+        width: 100%;
+        flex-direction: column;
+    }
+    .buttonWrapper {
+        width: 100%;
+    }
+  }

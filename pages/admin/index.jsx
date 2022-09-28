@@ -6,7 +6,6 @@ import { showError, showSuccess } from 'lib/ui/utils';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useMemo } from 'react';
 import styles from './Admin.module.css';
-import { Button } from 'components/Button';
 import { AllItems } from 'components/admin/AllItems';
 import { RollTables } from 'components/admin/RollTables';
 
@@ -60,10 +59,10 @@ export default function Admin() {
     }, [router.query.tab]);
 
     return (
-        <Auth>
-            <div>
+        <Auth >
+            <div className={styles.container}>
                 <div className={styles.logoutContainer}>
-                    <Button title="Log out" onClick={logOut} />
+                    <span className={styles.logoutBtn} onClick={logOut}>Log out</span>
                 </div>
 
                 <div className={styles.navContainer}>

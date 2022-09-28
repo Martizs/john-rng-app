@@ -1,6 +1,6 @@
 .container {
     text-align: center;
-    padding: 10px;
+    padding: 7px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -32,11 +32,11 @@
 }
 
 .success {
-    background-color: #8ccd79;
+    background-color:rgba(140, 205, 121, 0.6)
 }
 
 .success:hover {
-    background-color: rgba(140, 205, 121, 0.7);
+    background-color: rgba(140, 205, 121, 0.8);
 }
 
 .success:active {
@@ -44,13 +44,19 @@
 }
 
 .error {
-    background-color: #ff6666;
+    background-color: rgba(255, 102, 102, 0.6);
 }
 
 .error:hover {
-    background-color: rgba(255, 102, 102, 0.7);
+
+    background-color: rgba(255, 102, 102, 0.8);
 }
 
 .error:active {
     background-color: rgba(255, 102, 102, 0.4);
+}
+
+.menuBtn{
+    width: 100%;
+    margin-bottom: 0.5rem;
 }

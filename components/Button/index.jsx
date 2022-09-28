@@ -6,18 +6,19 @@ export const Button = ({
     title,
     type = 'generic',
     isLink,
+    menu,
     href,
     loading,
 }) =>
     isLink ? (
-        <a className={`${styles.container} ${styles[type]}`} href={href}>
+        <a className={`${styles.container} ${styles[type]} ${menu && styles.menuBtn}`} href={href}>
             {title}
         </a>
     ) : (
         <div
-            className={`${styles.container} ${styles[type]} ${
+            className={`${styles.container} ${styles[type] } ${
                 loading ? styles.disabled : ''
-            }`}
+            }  ${menu && styles.menuBtn}`}
             onClick={onClick}
         >
             {loading && (

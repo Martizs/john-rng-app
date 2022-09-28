@@ -1,13 +1,14 @@
 .container {
     border: 2px solid rgba(76, 70, 70, 1);
     border-radius: 5px;
-    padding: 10px;
+    padding: 4px 6px;
+    margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
 }
 .container:hover {
     cursor: pointer;
-    background-color: rgba(76, 70, 70, 0.7);
+    background-color: rgba(168, 168, 168, 0.3);
 }
 
 .title {

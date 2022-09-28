@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from './TabNavigation.module.css';
 
-const Tab = ({ href, isSelected, lastItem, firstItem, title }) => {
+const Tab = ({ href, isSelected, title }) => {
     const router = useRouter();
 
     return (
@@ -10,11 +10,8 @@ const Tab = ({ href, isSelected, lastItem, firstItem, title }) => {
             className={styles.tabItem}
             style={{
                 backgroundColor: isSelected
-                    ? 'rgba(76, 70, 70, 0.4)'
+                    ? 'rgba(255, 255, 255, 0.2)'
                     : 'transparent',
-                borderTopLeftRadius: firstItem ? '10px' : 0,
-                borderTopRightRadius: lastItem ? '10px' : 0,
-                borderRight: lastItem ? 0 : '1px solid',
             }}
         >
             {title}
