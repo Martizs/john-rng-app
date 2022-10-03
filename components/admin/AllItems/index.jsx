@@ -1,6 +1,5 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
 import { showError, showSuccess } from 'lib/ui/utils';
 import { debounce } from 'lodash';
@@ -100,43 +99,28 @@ export const AllItems = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.buttonContainer}>
-                <div className={styles.linkWrapper}>
-                    <Button
-                        title="Create item"
-                        onClick={() => setCreateItem(true)}
-                        type="success"
-                        menu
-                    />
+            <div className={styles.subMenuContainer}>
+                <div onClick={() => setCreateItem(true)} className={styles.subMenuItem}>
+                    <span >Create item</span>
                 </div>
-                <div className={styles.linkWrapper}>
-                    <Button
-                        title="Import csv"
-                        loading={loadingImport}
-                        onClick={() => {
-                            hiddenFileInput.current.click();
-                        }}
-                        menu
-                    />
-                    <input
-                        type="file"
-                        ref={hiddenFileInput}
-                        onChange={handleFileChange}
-                        style={{ display: 'none' }}
-                    />
-                </div>
-                <div className={styles.linkWrapper}>
-                    <Button
-                        href={`/api/admin/items/export?${queryString.stringify({
-                            search: searchTerm.current,
-                        })}`}
-                        isLink
-                        title="Export csv"
-                        menu
-                    />
-                </div>
-            </div>
+                <div onClick={() => {hiddenFileInput.current.click();}} className={styles.subMenuItem}>
+                    <span>{loadingImport ? 'Loading' : 'Import csv'}</span>
 
+                </div>
+                <a  href={`/api/admin/items/export?${queryString.stringify({
+                            search: searchTerm.current,
+                        })}`} className={`${styles.subMenuItem} ${styles.exportLink}`}>
+                    <span className={styles.exportLink}> Export csv</span>
+                </a>
+                <input
+                    type="file"
+                    ref={hiddenFileInput}
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+
+                    />
+            </div>
+    
             <div className={styles.listContainer}>
                 <div className={styles.searchInput}>
                     <InputField
