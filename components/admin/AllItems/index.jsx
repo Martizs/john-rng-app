@@ -105,6 +105,7 @@ export const AllItems = () => {
                 </div>
                 <div onClick={() => {hiddenFileInput.current.click();}} className={styles.subMenuItem}>
                     <span>{loadingImport ? 'Loading' : 'Import csv'}</span>
+
                 </div>
                 <a  href={`/api/admin/items/export?${queryString.stringify({
                             search: searchTerm.current,
@@ -116,6 +117,7 @@ export const AllItems = () => {
                     ref={hiddenFileInput}
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
+
                     />
             </div>
     
