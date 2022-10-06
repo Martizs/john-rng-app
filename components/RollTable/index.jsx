@@ -3,7 +3,8 @@ import { Button } from 'components/Button';
 import { ItemList } from 'components/ItemList';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { showError } from 'lib/ui/utils';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import styles from './RollTable.module.css';
 
 export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
@@ -27,6 +28,24 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
             .catch(showError);
     };
 
+    const options = useMemo(() => {
+        const adjustedItems = [];
+
+        allItems.forEach((item) => {
+            adjustedItems.push({
+                ...item,
+                label: (
+                    <div data-tip={item.description}>
+                        {item.label}
+                        <ReactTooltip delayShow={500} />
+                    </div>
+                ),
+            });
+        });
+
+        return adjustedItems;
+    }, [allItems]);
+
     return (
         <div className={styles.rollTableContainer}>
             <div className={styles.rollTableTitle}>{title}</div>
@@ -41,7 +60,7 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
                 </div>
                 <div className={styles.addItemContainer}>
                     <SearchDropdown
-                        options={allItems}
+                        options={options}
                         placeholder="Add item"
                         onChange={(option) => onAddItem(_id, option)}
                         value={null}

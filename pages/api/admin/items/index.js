@@ -27,6 +27,7 @@ export default authedSession({
         const data = await itemQuery
             .select('_id title description adminDescription')
             .lean();
+
         res.send({
             data,
             total,
