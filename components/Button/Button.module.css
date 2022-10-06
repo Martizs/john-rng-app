@@ -32,7 +32,7 @@
 }
 
 .success {
-    background-color:rgba(140, 205, 121, 0.6)
+    background-color: rgba(140, 205, 121, 0.6);
 }
 
 .success:hover {
@@ -48,7 +48,6 @@
 }
 
 .error:hover {
-
     background-color: rgba(255, 102, 102, 0.8);
 }
 
@@ -56,7 +55,7 @@
     background-color: rgba(255, 102, 102, 0.4);
 }
 
-.menuBtn{
+.menuBtn {
     width: 100%;
     margin-bottom: 0.5rem;
 }
