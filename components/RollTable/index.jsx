@@ -33,15 +33,7 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
 
         allItems.forEach((item) => {
             if (!tableItems.find((tableItem) => tableItem._id === item._id)) {
-                adjustedItems.push({
-                    ...item,
-                    label: (
-                        <div data-tip={item.description}>
-                            {item.label}
-                            <ReactTooltip delayShow={500} />
-                        </div>
-                    ),
-                });
+                adjustedItems.push(item);
             }
         });
 
@@ -65,6 +57,12 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
                         options={options}
                         placeholder="Add item"
                         onChange={(option) => onAddItem(_id, option)}
+                        formatOptionLabel={(option) => (
+                            <div data-tip={option.description}>
+                                {option.label}
+                                <ReactTooltip delayShow={500} />
+                            </div>
+                        )}
                         value={null}
                     />
                 </div>
