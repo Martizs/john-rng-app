@@ -3,8 +3,13 @@ import mongoose from 'mongoose';
 const ItemSchema = new mongoose.Schema(
     {
         title: { type: String, required: true, trim: true },
-        description: { type: String, trim: true },
-        adminDescription: { type: String, select: false, trim: true },
+        description: { type: String, trim: true, default: '' },
+        adminDescription: {
+            type: String,
+            select: false,
+            trim: true,
+            default: '',
+        },
         image: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
     },
     { timestamps: true }
