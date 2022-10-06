@@ -6,6 +6,7 @@ import { ItemModal } from 'components/ItemModal';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { showError } from 'lib/ui/utils';
+import { ConfirmDeleteModal } from 'components/ConfirmDeleteModal';
 
 export const ItemList = ({
     items,
@@ -19,8 +20,10 @@ export const ItemList = ({
     createItem,
     onItemSave,
     resetCreate,
+    confirmDelete,
 }) => {
     const [showItem, setShowItem] = useState(null);
+    const [showItemDelete, setShowItemDelete] = useState(null);
     const currItem = useRef({});
 
     useEffect(() => {
@@ -60,6 +63,19 @@ export const ItemList = ({
         setShowItem(null);
     };
 
+    const handleOnItemDelete = (itemId) => {
+        setShowItemDelete(null);
+        onItemDelete(itemId);
+    };
+
+    const handleShowItemDelete = (item) => {
+        if (confirmDelete) {
+            setShowItemDelete(item);
+        } else {
+            handleOnItemDelete(item?._id);
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div
@@ -80,7 +96,9 @@ export const ItemList = ({
                                         title={item.title}
                                         tooltip={item.description}
                                         onClick={() => handleShowItem(item)}
-                                        onDelete={() => onItemDelete(item._id)}
+                                        onDelete={() =>
+                                            handleShowItemDelete(item)
+                                        }
                                     />
                                 ))}
                             </>
@@ -116,6 +134,12 @@ export const ItemList = ({
                 item={showItem}
                 onChange={onItemChange}
                 onSave={onSave}
+            />
+            <ConfirmDeleteModal
+                isOpen={!!showItemDelete}
+                onRequestClose={() => setShowItemDelete(null)}
+                title={`Are you sure you want to delete item - ${showItemDelete?.title} ?`}
+                onConfirm={() => handleOnItemDelete(showItemDelete?._id)}
             />
         </div>
     );

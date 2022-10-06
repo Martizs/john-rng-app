@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Button } from 'components/Button';
+import { ConfirmDeleteModal } from 'components/ConfirmDeleteModal';
 import { LoadingIcon } from 'components/Icons/LoadingIcon';
 import { InputField } from 'components/InputField';
 import { Modal } from 'components/Modal';
@@ -13,6 +14,7 @@ export const RollTables = () => {
     const [rollTables, setRollTables] = useState([]);
     const [allItems, setAllItems] = useState([]);
     const [loadingTables, setLoadingTables] = useState(false);
+    const [showTableDelete, setShowTableDelete] = useState(null);
     const createTitle = useRef();
 
     useEffect(() => {
@@ -106,6 +108,11 @@ export const RollTables = () => {
             .catch(showError);
     };
 
+    const handleOnTableDelete = (tableId) => {
+        setShowTableDelete(null);
+        onTableDelete(tableId);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.subMenuContainer}>
@@ -129,7 +136,7 @@ export const RollTables = () => {
                             initialTableItems={rollTable.items}
                             allItems={allItems}
                             reloadItems={loadAllItems}
-                            onTableDelete={() => onTableDelete(rollTable._id)}
+                            onTableDelete={() => setShowTableDelete(rollTable)}
                             onTableEdit={() => setAddEditTable(rollTable)}
                         />
                     ))}
@@ -153,6 +160,12 @@ export const RollTables = () => {
                     </div>
                 )}
             </Modal>
+            <ConfirmDeleteModal
+                isOpen={!!showTableDelete}
+                onRequestClose={() => setShowTableDelete(null)}
+                title={`Are you sure you want to delete table - ${showTableDelete?.title} ?`}
+                onConfirm={() => handleOnTableDelete(showTableDelete?._id)}
+            />
         </div>
     );
 };

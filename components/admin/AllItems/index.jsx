@@ -150,6 +150,7 @@ export const AllItems = () => {
                     createItem={createItem}
                     onItemSave={() => loadItems({})}
                     resetCreate={() => setCreateItem(false)}
+                    confirmDelete
                 />
             </div>
         </div>
