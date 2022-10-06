@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './RollTables.module.css';
 
 export const RollTables = () => {
-    const [createTable, setCreatetable] = useState(false);
+    const [addEditTable, setAddEditTable] = useState(false);
     const [rollTables, setRollTables] = useState([]);
     const [allItems, setAllItems] = useState([]);
     const [loadingTables, setLoadingTables] = useState(false);
@@ -53,10 +53,37 @@ export const RollTables = () => {
         }
     };
 
-    const onCreate = () => {
-        axios
-            .post('/api/admin/rollTables', { title: createTitle.current })
-            .then(() => loadRollTables())
+    const onSaveTable = () => {
+        let method = 'post';
+        const body = { title: createTitle.current };
+        if (addEditTable._id) {
+            method = 'put';
+            body.tableId = addEditTable._id;
+        }
+
+        axios[method]('/api/admin/rollTables', body)
+            .then((resp) => {
+                const table = resp.data;
+
+                const newRollTables = [...rollTables];
+                if (addEditTable._id) {
+                    const editedIndex = newRollTables.findIndex(
+                        (rollTable) => rollTable._id === addEditTable._id
+                    );
+
+                    newRollTables[editedIndex] = {
+                        ...newRollTables[editedIndex],
+                        ...table,
+                    };
+                } else {
+                    newRollTables.unshift({
+                        items: [],
+                        ...table,
+                    });
+                }
+
+                setRollTables(newRollTables);
+            })
             .catch(showError)
             .finally(() => {
                 handleCreateClose();
@@ -65,18 +92,7 @@ export const RollTables = () => {
 
     const handleCreateClose = () => {
         createTitle.current = undefined;
-        setCreatetable(false);
-    };
-
-    const loadRollTables = () => {
-        setLoadingTables(true);
-        axios
-            .get('/api/admin/rollTables')
-            .then((resp) => setRollTables(resp.data))
-            .catch(showError)
-            .finally(() => {
-                setLoadingTables(false);
-            });
+        setAddEditTable(false);
     };
 
     const onTableDelete = (tableId) => {
@@ -94,7 +110,7 @@ export const RollTables = () => {
         <div className={styles.container}>
             <div className={styles.subMenuContainer}>
                 <div
-                    onClick={() => setCreatetable(true)}
+                    onClick={() => setAddEditTable({})}
                     className={styles.subMenuItem}
                 >
                     <span>Create table</span>
@@ -114,18 +130,28 @@ export const RollTables = () => {
                             allItems={allItems}
                             reloadItems={loadAllItems}
                             onTableDelete={() => onTableDelete(rollTable._id)}
+                            onTableEdit={() => setAddEditTable(rollTable)}
                         />
                     ))}
                 </div>
             )}
-            <Modal isOpen={createTable} onRequestClose={handleCreateClose}>
-                <div className={styles.addModalContainer}>
-                    <InputField
-                        placeholder="Title"
-                        onChange={(e) => (createTitle.current = e.target.value)}
-                    />
-                    <Button title="Add" type="success" onClick={onCreate} />
-                </div>
+            <Modal isOpen={!!addEditTable} onRequestClose={handleCreateClose}>
+                {addEditTable && (
+                    <div className={styles.addModalContainer}>
+                        <InputField
+                            placeholder="Title"
+                            defaultValue={addEditTable.title}
+                            onChange={(e) =>
+                                (createTitle.current = e.target.value)
+                            }
+                        />
+                        <Button
+                            title="Save"
+                            type="success"
+                            onClick={onSaveTable}
+                        />
+                    </div>
+                )}
             </Modal>
         </div>
     );

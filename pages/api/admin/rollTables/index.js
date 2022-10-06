@@ -4,9 +4,20 @@ import RollTable from 'models/RollTable';
 export default authedSession({
     post: async (req, res) => {
         const { title } = req.body;
-        await RollTable.create({ title });
+        const rollTable = await RollTable.create({ title });
 
-        res.status(200).send();
+        res.status(200).send(rollTable);
+    },
+    put: async (req, res) => {
+        const { tableId, title } = req.body;
+
+        const rollTable = await RollTable.findById(tableId);
+
+        rollTable.title = title;
+
+        await rollTable.save();
+
+        res.status(200).send(rollTable);
     },
     get: async (req, res) => {
         res.status(200).send(

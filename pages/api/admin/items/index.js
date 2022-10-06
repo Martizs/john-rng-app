@@ -47,10 +47,11 @@ export default authedSession({
     put: async (req, res) => {
         const { _id, title, description, adminDescription } = req.body;
 
-        const item = await Item.findOneAndUpdate(
-            { _id },
-            { title, description, adminDescription }
-        );
+        const item = await Item.findById(_id);
+        item.title = title;
+        item.description = description;
+        item.adminDescription = adminDescription;
+        await item.save();
 
         res.status(200).send(item);
     },

@@ -7,6 +7,12 @@
     background-color: rgba(128, 128, 128, 0.144);
 }
 
+.iconButtonContainer {
+    display: flex;
+    width: 65px;
+    justify-content: space-between;
+}
+
 .rollTableHeader {
     display: flex;
     background-color: rgba(128, 128, 128, 0.418);
