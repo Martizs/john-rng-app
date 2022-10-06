@@ -139,7 +139,7 @@ export const AllItems = () => {
                 </div>
 
                 <ItemList
-                    listHeight="580px"
+                    listHeight="620px"
                     loading={loadingItems}
                     items={itemData.data}
                     pageCount={Math.ceil(itemData.total / pageSize)}
