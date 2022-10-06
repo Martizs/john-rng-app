@@ -13,7 +13,7 @@ export default authedSession({
 
         let itemQuery = Item.find(searchObject).sort({
             createdAt: -1,
-            title: 1,
+            _id: 1,
         });
 
         let total = 0;

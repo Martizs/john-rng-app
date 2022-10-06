@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AllItems.module.css';
 import { InputField } from 'components/InputField';
 
-const pageSize = 10;
+const pageSize = 15;
 
 export const AllItems = () => {
     const hiddenFileInput = useRef(null);
@@ -100,16 +100,26 @@ export const AllItems = () => {
     return (
         <div className={styles.container}>
             <div className={styles.subMenuContainer}>
-                <div onClick={() => setCreateItem(true)} className={styles.subMenuItem}>
-                    <span >Create item</span>
+                <div
+                    onClick={() => setCreateItem(true)}
+                    className={styles.subMenuItem}
+                >
+                    <span>Create item</span>
                 </div>
-                <div onClick={() => {hiddenFileInput.current.click();}} className={styles.subMenuItem}>
+                <div
+                    onClick={() => {
+                        hiddenFileInput.current.click();
+                    }}
+                    className={styles.subMenuItem}
+                >
                     <span>{loadingImport ? 'Loading' : 'Import csv'}</span>
-
                 </div>
-                <a  href={`/api/admin/items/export?${queryString.stringify({
-                            search: searchTerm.current,
-                        })}`} className={`${styles.subMenuItem} ${styles.exportLink}`}>
+                <a
+                    href={`/api/admin/items/export?${queryString.stringify({
+                        search: searchTerm.current,
+                    })}`}
+                    className={`${styles.subMenuItem} ${styles.exportLink}`}
+                >
                     <span className={styles.exportLink}> Export csv</span>
                 </a>
                 <input
@@ -117,10 +127,9 @@ export const AllItems = () => {
                     ref={hiddenFileInput}
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
-
-                    />
+                />
             </div>
-    
+
             <div className={styles.listContainer}>
                 <div className={styles.searchInput}>
                     <InputField
@@ -130,7 +139,7 @@ export const AllItems = () => {
                 </div>
 
                 <ItemList
-                    listHeight="650px"
+                    listHeight="580px"
                     loading={loadingItems}
                     items={itemData.data}
                     pageCount={Math.ceil(itemData.total / pageSize)}
