@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Button } from 'components/Button';
+import { DeleteIconButton } from 'components/DeleteIconButton';
 import { ItemList } from 'components/ItemList';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { showError } from 'lib/ui/utils';
@@ -13,6 +14,7 @@ export const RollTable = ({
     initialTableItems,
     allItems,
     reloadItems,
+    onTableDelete,
 }) => {
     const [createItem, setCreateItem] = useState(false);
 
@@ -66,7 +68,10 @@ export const RollTable = ({
 
     return (
         <div className={styles.rollTableContainer}>
-            <div className={styles.rollTableTitle}>{title}</div>
+            <div className={styles.rollTableHeader}>
+                <div className={styles.rollTableTitle}>{title}</div>
+                <DeleteIconButton width={30} onClick={onTableDelete} />
+            </div>
 
             <div className={styles.createAddContainer}>
                 <div className={styles.addCreateButtonContainer}>

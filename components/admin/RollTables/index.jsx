@@ -59,16 +59,16 @@ export const RollTables = () => {
             .then(() => loadRollTables())
             .catch(showError)
             .finally(() => {
-                hangleCreateClose();
+                handleCreateClose();
             });
     };
 
-    const hangleCreateClose = () => {
+    const handleCreateClose = () => {
         createTitle.current = undefined;
         setCreatetable(false);
     };
 
-    const loadRollTables = async () => {
+    const loadRollTables = () => {
         setLoadingTables(true);
         axios
             .get('/api/admin/rollTables')
@@ -77,6 +77,17 @@ export const RollTables = () => {
             .finally(() => {
                 setLoadingTables(false);
             });
+    };
+
+    const onTableDelete = (tableId) => {
+        axios
+            .delete('/api/admin/rollTables', { data: { tableId } })
+            .then(() =>
+                setRollTables(
+                    rollTables.filter((rollTable) => rollTable._id !== tableId)
+                )
+            )
+            .catch(showError);
     };
 
     return (
@@ -102,11 +113,12 @@ export const RollTables = () => {
                             initialTableItems={rollTable.items}
                             allItems={allItems}
                             reloadItems={loadAllItems}
+                            onTableDelete={() => onTableDelete(rollTable._id)}
                         />
                     ))}
                 </div>
             )}
-            <Modal isOpen={createTable} onRequestClose={hangleCreateClose}>
+            <Modal isOpen={createTable} onRequestClose={handleCreateClose}>
                 <div className={styles.addModalContainer}>
                     <InputField
                         placeholder="Title"
