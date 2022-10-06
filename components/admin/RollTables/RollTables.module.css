@@ -28,14 +28,12 @@
     width: 100%;
 }
 
-
 .subMenuItem:hover {
     cursor: pointer;
     background-color: rgba(76, 70, 70, 0.4) !important;
 }
 
-
-.subMenuContainer{
+.subMenuContainer {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */

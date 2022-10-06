@@ -2,8 +2,7 @@
     border: 1px solid #80808078;
     min-width: 300px;
     max-width: 500px;
-    margin: 0.2rem;
-    width: 50%;
+    width: 100%;
     background-color: rgba(128, 128, 128, 0.144);
 }
 
@@ -43,8 +42,6 @@
 
 @media (max-width: 800px) {
     .rollTableContainer {
-        margin: 0.2rem;
-        width: 100%;
         max-width: none;
     }
 }

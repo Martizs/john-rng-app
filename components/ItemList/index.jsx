@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { showError } from 'lib/ui/utils';
 import { ConfirmDeleteModal } from 'components/ConfirmDeleteModal';
+import { v1 as uuidv1 } from 'uuid';
 
 export const ItemList = ({
     items,
@@ -21,6 +22,7 @@ export const ItemList = ({
     onItemSave,
     resetCreate,
     confirmDelete,
+    temporary,
 }) => {
     const [showItem, setShowItem] = useState(null);
     const [showItemDelete, setShowItemDelete] = useState(null);
@@ -44,15 +46,31 @@ export const ItemList = ({
         setShowItem(item);
     };
 
-    const onSave = () => {
+    const onSave = async () => {
         const method = currItem.current._id ? 'put' : 'post';
+        const type = currItem.current._id ? 'edit' : 'create';
 
-        axios[method]('/api/admin/items', currItem.current)
-            .then((resp) => {
-                handleCLose();
-                onItemSave(resp.data);
-            })
-            .catch(showError);
+        try {
+            let data;
+
+            if (!temporary) {
+                const resp = await axios[method](
+                    '/api/admin/items',
+                    currItem.current
+                );
+                data = resp.data;
+            } else {
+                data = {
+                    _id: uuidv1(),
+                    ...currItem.current,
+                };
+            }
+
+            handleCLose();
+            onItemSave(data, type);
+        } catch (error) {
+            showError(error);
+        }
     };
 
     const handleCLose = () => {
