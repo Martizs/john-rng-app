@@ -32,19 +32,21 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
         const adjustedItems = [];
 
         allItems.forEach((item) => {
-            adjustedItems.push({
-                ...item,
-                label: (
-                    <div data-tip={item.description}>
-                        {item.label}
-                        <ReactTooltip delayShow={500} />
-                    </div>
-                ),
-            });
+            if (!tableItems.find((tableItem) => tableItem._id === item._id)) {
+                adjustedItems.push({
+                    ...item,
+                    label: (
+                        <div data-tip={item.description}>
+                            {item.label}
+                            <ReactTooltip delayShow={500} />
+                        </div>
+                    ),
+                });
+            }
         });
 
         return adjustedItems;
-    }, [allItems]);
+    }, [allItems, tableItems]);
 
     return (
         <div className={styles.rollTableContainer}>
