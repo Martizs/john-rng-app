@@ -45,9 +45,9 @@ export const ItemList = ({
         const method = currItem.current._id ? 'put' : 'post';
 
         axios[method]('/api/admin/items', currItem.current)
-            .then(() => {
+            .then((resp) => {
                 handleCLose();
-                onItemSave();
+                onItemSave(resp.data);
             })
             .catch(showError);
     };

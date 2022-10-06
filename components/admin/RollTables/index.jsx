@@ -19,13 +19,8 @@ export const RollTables = () => {
         loadInitalData();
     }, []);
 
-    const loadInitalData = async () => {
-        setLoadingTables(true);
-
+    const loadAllItems = async () => {
         try {
-            const rollTablesResp = await axios.get('/api/admin/rollTables');
-            setRollTables(rollTablesResp.data);
-
             const allItemsResp = await axios.get('/api/admin/items');
 
             setAllItems(
@@ -38,6 +33,19 @@ export const RollTables = () => {
                     adminDescription: item.adminDescription,
                 }))
             );
+        } catch (error) {
+            showError(error);
+        }
+    };
+
+    const loadInitalData = async () => {
+        setLoadingTables(true);
+
+        try {
+            const rollTablesResp = await axios.get('/api/admin/rollTables');
+            setRollTables(rollTablesResp.data);
+
+            await loadAllItems();
         } catch (error) {
             showError(error);
         } finally {
@@ -93,6 +101,7 @@ export const RollTables = () => {
                             _id={rollTable._id}
                             initialTableItems={rollTable.items}
                             allItems={allItems}
+                            reloadItems={loadAllItems}
                         />
                     ))}
                 </div>

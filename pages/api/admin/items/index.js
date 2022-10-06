@@ -36,15 +36,22 @@ export default authedSession({
     post: async (req, res) => {
         const { title, description, adminDescription } = req.body;
 
-        await Item.create({ title, description, adminDescription });
+        const item = await Item.create({
+            title,
+            description,
+            adminDescription,
+        });
 
-        res.status(200).send();
+        res.status(200).send(item);
     },
     put: async (req, res) => {
         const { _id, title, description, adminDescription } = req.body;
 
-        await Item.updateOne({ _id }, { title, description, adminDescription });
+        const item = await Item.findOneAndUpdate(
+            { _id },
+            { title, description, adminDescription }
+        );
 
-        res.status(200).send();
+        res.status(200).send(item);
     },
 });

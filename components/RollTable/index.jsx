@@ -7,7 +7,13 @@ import { useMemo, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import styles from './RollTable.module.css';
 
-export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
+export const RollTable = ({
+    title,
+    _id,
+    initialTableItems,
+    allItems,
+    reloadItems,
+}) => {
     const [createItem, setCreateItem] = useState(false);
 
     const [tableItems, setTableItems] = useState(initialTableItems || []);
@@ -16,7 +22,7 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
         axios
             .post('/api/admin/rollTables/addItem', {
                 tableId,
-                itemId: item.value,
+                itemId: item._id,
             })
             .then(() => {
                 const newTableItems = [...tableItems];
@@ -26,6 +32,11 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
                 setTableItems(newTableItems);
             })
             .catch(showError);
+    };
+
+    const onItemSave = (item) => {
+        onAddItem(_id, item);
+        reloadItems();
     };
 
     const options = useMemo(() => {
@@ -70,11 +81,10 @@ export const RollTable = ({ title, _id, initialTableItems, allItems }) => {
 
             <ItemList
                 createItem={createItem}
-                // onItemSave={() => loadItems({})}
-                // resetCreate={() => setCreateItem(false)}
+                onItemSave={onItemSave}
+                resetCreate={() => setCreateItem(false)}
                 items={tableItems}
                 showPagination={false}
-                // onSearch={(event) => console.log('search', event.target.value)}
                 // onItemDelete={(id) => console.log('delete id', id)}
             />
         </div>
