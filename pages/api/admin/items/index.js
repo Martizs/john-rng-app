@@ -13,7 +13,7 @@ export default authedSession({
 
         let itemQuery = Item.find(searchObject).sort({
             createdAt: -1,
-            title: 1,
+            _id: 1,
         });
 
         let total = 0;
@@ -27,6 +27,7 @@ export default authedSession({
         const data = await itemQuery
             .select('_id title description adminDescription')
             .lean();
+
         res.send({
             data,
             total,
@@ -35,15 +36,23 @@ export default authedSession({
     post: async (req, res) => {
         const { title, description, adminDescription } = req.body;
 
-        await Item.create({ title, description, adminDescription });
+        const item = await Item.create({
+            title,
+            description,
+            adminDescription,
+        });
 
-        res.status(200).send();
+        res.status(200).send(item);
     },
     put: async (req, res) => {
         const { _id, title, description, adminDescription } = req.body;
 
-        await Item.updateOne({ _id }, { title, description, adminDescription });
+        const item = await Item.findById(_id);
+        item.title = title;
+        item.description = description;
+        item.adminDescription = adminDescription;
+        await item.save();
 
-        res.status(200).send();
+        res.status(200).send(item);
     },
 });

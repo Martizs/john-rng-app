@@ -19,8 +19,3 @@
     overflow: hidden;
     white-space: nowrap;
 }
-
-.deleteIcon{
-    width: 20px;
-    filter: invert(35%) sepia(40%) saturate(2476%);
-}

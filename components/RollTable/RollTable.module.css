@@ -7,11 +7,22 @@
     background-color: rgba(128, 128, 128, 0.144);
 }
 
-.rollTableTitle {
+.iconButtonContainer {
+    display: flex;
+    width: 65px;
+    justify-content: space-between;
+}
+
+.rollTableHeader {
+    display: flex;
     background-color: rgba(128, 128, 128, 0.418);
-    text-align: center;
-    padding: 10px 0;
+    padding: 5px 0;
+}
+
+.rollTableTitle {
     font-size: 20px;
+    text-align: center;
+    margin: auto;
 }
 
 .createAddContainer {
@@ -34,6 +45,6 @@
     .rollTableContainer {
         margin: 0.2rem;
         width: 100%;
-        max-width:none;
+        max-width: none;
     }
-  }
+}

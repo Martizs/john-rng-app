@@ -1,3 +1,4 @@
+import { DeleteIconButton } from 'components/DeleteIconButton';
 import ReactTooltip from 'react-tooltip';
 import styles from './ListItem.module.css';
 
@@ -10,7 +11,7 @@ export const ListItem = ({ title, tooltip, onClick, onDelete }) => {
     return (
         <div className={styles.container} onClick={onClick} data-tip={tooltip}>
             <div className={styles.title}>{title}</div>
-            <img onClick={handleDelete} className={styles.deleteIcon} src="/icons/delete.svg" alt="delete" />
+            <DeleteIconButton onClick={handleDelete} />
             <ReactTooltip delayShow={500} />
         </div>
     );

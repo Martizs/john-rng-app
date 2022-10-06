@@ -31,7 +31,7 @@ export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
                         <div className={styles.label}>Title</div>
                         {item._id && !edit ? (
                             <div className={styles.text}>
-                                {item.title ?? '-'}
+                                {item.title ?? ''}
                             </div>
                         ) : (
                             <InputField
@@ -44,7 +44,7 @@ export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
                         <div className={styles.label}>Description</div>
                         {item._id && !edit ? (
                             <div className={styles.text}>
-                                {item.description ?? '-'}
+                                {item.description ?? ''}
                             </div>
                         ) : (
                             <TextArea
@@ -58,7 +58,7 @@ export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
                         <div className={styles.label}>Admin description</div>
                         {item._id && !edit ? (
                             <div className={styles.text}>
-                                {item.adminDescription ?? '-'}
+                                {item.adminDescription ?? ''}
                             </div>
                         ) : (
                             <TextArea

@@ -1,0 +1,8 @@
+.editIcon {
+    fill: rgba(30, 63, 102, 1);
+}
+
+.editIcon:hover {
+    fill: rgba(30, 63, 102, 0.6);
+    cursor: pointer;
+}

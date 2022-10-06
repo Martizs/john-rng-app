@@ -11,12 +11,17 @@ export const Button = ({
     loading,
 }) =>
     isLink ? (
-        <a className={`${styles.container} ${styles[type]} ${menu && styles.menuBtn}`} href={href}>
+        <a
+            className={`${styles.container} ${styles[type]} ${
+                menu && styles.menuBtn
+            }`}
+            href={href}
+        >
             {title}
         </a>
     ) : (
         <div
-            className={`${styles.container} ${styles[type] } ${
+            className={`${styles.container} ${styles[type]} ${
                 loading ? styles.disabled : ''
             }  ${menu && styles.menuBtn}`}
             onClick={onClick}
