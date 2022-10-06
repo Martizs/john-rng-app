@@ -22,4 +22,16 @@ export default authedSession({
 
         res.status(200).send();
     },
+    delete: async (req, res) => {
+        const { tableId, itemId } = req.body;
+
+        await RollTable.updateOne(
+            { _id: tableId },
+            {
+                $pull: { items: itemId },
+            }
+        );
+
+        res.status(200).send();
+    },
 });

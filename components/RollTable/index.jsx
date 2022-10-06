@@ -18,10 +18,10 @@ export const RollTable = ({
 
     const [tableItems, setTableItems] = useState(initialTableItems || []);
 
-    const onAddItem = (tableId, item) => {
+    const onAddItem = (item) => {
         axios
-            .post('/api/admin/rollTables/addItem', {
-                tableId,
+            .post('/api/admin/rollTables/items', {
+                tableId: _id,
                 itemId: item._id,
             })
             .then(() => {
@@ -31,6 +31,19 @@ export const RollTable = ({
 
                 setTableItems(newTableItems);
             })
+            .catch(showError);
+    };
+
+    const onRemoveItem = (itemId) => {
+        axios
+            .delete('/api/admin/rollTables/items', {
+                data: { tableId: _id, itemId },
+            })
+            .then(() =>
+                setTableItems(
+                    tableItems.filter((tableItem) => tableItem._id !== itemId)
+                )
+            )
             .catch(showError);
     };
 
@@ -67,7 +80,7 @@ export const RollTable = ({
                     <SearchDropdown
                         options={options}
                         placeholder="Add item"
-                        onChange={(option) => onAddItem(_id, option)}
+                        onChange={onAddItem}
                         formatOptionLabel={(option) => (
                             <div data-tip={option.description}>
                                 {option.label}
@@ -85,7 +98,7 @@ export const RollTable = ({
                 resetCreate={() => setCreateItem(false)}
                 items={tableItems}
                 showPagination={false}
-                // onItemDelete={(id) => console.log('delete id', id)}
+                onItemDelete={onRemoveItem}
             />
         </div>
     );
