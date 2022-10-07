@@ -75,7 +75,7 @@ export const RollTables = () => {
 
                     newRollTables[editedIndex] = {
                         ...newRollTables[editedIndex],
-                        ...table,
+                        title: table.title,
                     };
                 } else {
                     newRollTables.unshift({
@@ -88,11 +88,11 @@ export const RollTables = () => {
             })
             .catch(showError)
             .finally(() => {
-                handleCreateClose();
+                handleAddEditClose();
             });
     };
 
-    const handleCreateClose = () => {
+    const handleAddEditClose = () => {
         createTitle.current = undefined;
         setAddEditTable(false);
     };
@@ -113,6 +113,12 @@ export const RollTables = () => {
         onTableDelete(tableId);
     };
 
+    const setTableItems = (newTableItems, index) => {
+        const newRollTables = [...rollTables];
+        newRollTables[index].items = newTableItems;
+        setRollTables(newRollTables);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.subMenuContainer}>
@@ -128,12 +134,15 @@ export const RollTables = () => {
                 <LoadingIcon width={200} height={200} />
             ) : (
                 <div className={styles.tablesContainer}>
-                    {rollTables.map((rollTable) => (
+                    {rollTables.map((rollTable, index) => (
                         <RollTable
                             key={rollTable._id}
                             title={rollTable.title}
                             _id={rollTable._id}
-                            initialTableItems={rollTable.items}
+                            tableItems={rollTable.items}
+                            setTableItems={(newTableItems) =>
+                                setTableItems(newTableItems, index)
+                            }
                             allItems={allItems}
                             reloadItems={loadAllItems}
                             onTableDelete={() => setShowTableDelete(rollTable)}
@@ -142,7 +151,7 @@ export const RollTables = () => {
                     ))}
                 </div>
             )}
-            <Modal isOpen={!!addEditTable} onRequestClose={handleCreateClose}>
+            <Modal isOpen={!!addEditTable} onRequestClose={handleAddEditClose}>
                 {addEditTable && (
                     <div className={styles.addModalContainer}>
                         <InputField

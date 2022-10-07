@@ -23,6 +23,7 @@ export const ItemList = ({
     resetCreate,
     confirmDelete,
     temporary,
+    hideAdminDesc,
 }) => {
     const [showItem, setShowItem] = useState(null);
     const [showItemDelete, setShowItemDelete] = useState(null);
@@ -152,6 +153,7 @@ export const ItemList = ({
                 item={showItem}
                 onChange={onItemChange}
                 onSave={onSave}
+                hideAdminDesc={hideAdminDesc}
             />
             <ConfirmDeleteModal
                 isOpen={!!showItemDelete}

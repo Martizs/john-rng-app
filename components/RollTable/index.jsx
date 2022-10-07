@@ -5,24 +5,24 @@ import { EditIconButton } from 'components/EditIconButton';
 import { ItemList } from 'components/ItemList';
 import { SearchDropdown } from 'components/SearchDropdown';
 import { showError } from 'lib/ui/utils';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import styles from './RollTable.module.css';
 
 export const RollTable = ({
     title,
     _id,
-    initialTableItems,
+    tableItems,
+    setTableItems,
     allItems,
     reloadItems,
     onTableDelete,
     onTableEdit,
     margin = '0.2rem',
     temporary,
+    hideAdminDesc,
 }) => {
     const [createItem, setCreateItem] = useState(false);
-
-    const [tableItems, setTableItems] = useState([]);
 
     const onAddItem = async (item) => {
         try {
@@ -35,6 +35,7 @@ export const RollTable = ({
 
             const newTableItems = [...tableItems];
             newTableItems.unshift(item);
+
             setTableItems(newTableItems);
         } catch (error) {
             showError(error);
@@ -66,6 +67,7 @@ export const RollTable = ({
                 (tableItem) => tableItem._id === item._id
             );
             newTableItems[editedIndex] = item;
+
             setTableItems(newTableItems);
         }
 
@@ -83,10 +85,6 @@ export const RollTable = ({
 
         return adjustedItems;
     }, [allItems, tableItems]);
-
-    useEffect(() => {
-        setTableItems(initialTableItems);
-    }, [initialTableItems]);
 
     return (
         <div className={styles.rollTableContainer} style={{ margin }}>
@@ -139,6 +137,7 @@ export const RollTable = ({
                 showPagination={false}
                 onItemDelete={onRemoveItem}
                 temporary={temporary}
+                hideAdminDesc={hideAdminDesc}
             />
         </div>
     );
