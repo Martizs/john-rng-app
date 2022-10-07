@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.slimContainer {
+    margin: auto;
+    max-width: 500px;
+    width: 100%;
+}
+
+.buttonWrapper {
+    width: 240px;
+    margin: auto 0;
+    padding: 10px 0;
+}
+
+.inputWrapper {
+    width: 240px;
+    margin: auto 0;
+}
+
+.divider {
+    margin-top: 20px;
+    width: 100%;
+    height: 1px;
+    background-color: #80808078;
+}
+
+.actionContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.bottomContainer {
+    padding-bottom: 40px;
+}

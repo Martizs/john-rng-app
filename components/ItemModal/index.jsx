@@ -5,7 +5,14 @@ import { TextArea } from 'components/TextArea';
 import { useState } from 'react';
 import styles from './ItemModal.module.css';
 
-export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
+export const ItemModal = ({
+    isOpen,
+    onClose,
+    item,
+    onChange,
+    onSave,
+    hideAdminDesc,
+}) => {
     const [edit, setEdit] = useState(false);
 
     const handleClose = () => {
@@ -55,21 +62,28 @@ export const ItemModal = ({ isOpen, onClose, item, onChange, onSave }) => {
                                 }
                             />
                         )}
-                        <div className={styles.label}>Admin description</div>
-                        {item._id && !edit ? (
-                            <div className={styles.text}>
-                                {item.adminDescription ?? ''}
-                            </div>
-                        ) : (
-                            <TextArea
-                                defaultValue={item.adminDescription}
-                                minRows={4}
-                                onChange={(e) =>
-                                    onChange({
-                                        adminDescription: e.target.value,
-                                    })
-                                }
-                            />
+                        {!hideAdminDesc && (
+                            <>
+                                <div className={styles.label}>
+                                    Admin description
+                                </div>
+                                {item._id && !edit ? (
+                                    <div className={styles.text}>
+                                        {item.adminDescription ?? ''}
+                                    </div>
+                                ) : (
+                                    <TextArea
+                                        defaultValue={item.adminDescription}
+                                        minRows={4}
+                                        onChange={(e) =>
+                                            onChange({
+                                                adminDescription:
+                                                    e.target.value,
+                                            })
+                                        }
+                                    />
+                                )}
+                            </>
                         )}
                     </div>
 

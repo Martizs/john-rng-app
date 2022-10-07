@@ -12,48 +12,66 @@ import styles from './RollTable.module.css';
 export const RollTable = ({
     title,
     _id,
-    initialTableItems,
+    tableItems,
+    setTableItems,
     allItems,
     reloadItems,
     onTableDelete,
     onTableEdit,
+    margin = '0.2rem',
+    temporary,
+    hideAdminDesc,
 }) => {
     const [createItem, setCreateItem] = useState(false);
 
-    const [tableItems, setTableItems] = useState(initialTableItems || []);
+    const onAddItem = async (item) => {
+        try {
+            if (!temporary) {
+                await axios.post('/api/admin/rollTables/items', {
+                    tableId: _id,
+                    itemId: item._id,
+                });
+            }
 
-    const onAddItem = (item) => {
-        axios
-            .post('/api/admin/rollTables/items', {
-                tableId: _id,
-                itemId: item._id,
-            })
-            .then(() => {
-                const newTableItems = [...tableItems];
+            const newTableItems = [...tableItems];
+            newTableItems.unshift(item);
 
-                newTableItems.unshift(item);
-
-                setTableItems(newTableItems);
-            })
-            .catch(showError);
+            setTableItems(newTableItems);
+        } catch (error) {
+            showError(error);
+        }
     };
 
-    const onRemoveItem = (itemId) => {
-        axios
-            .delete('/api/admin/rollTables/items', {
-                data: { tableId: _id, itemId },
-            })
-            .then(() =>
-                setTableItems(
-                    tableItems.filter((tableItem) => tableItem._id !== itemId)
-                )
-            )
-            .catch(showError);
+    const onRemoveItem = async (itemId) => {
+        try {
+            if (!temporary) {
+                await axios.delete('/api/admin/rollTables/items', {
+                    data: { tableId: _id, itemId },
+                });
+            }
+
+            setTableItems(
+                tableItems.filter((tableItem) => tableItem._id !== itemId)
+            );
+        } catch (error) {
+            showError(error);
+        }
     };
 
-    const onItemSave = (item) => {
-        onAddItem(_id, item);
-        reloadItems();
+    const onItemSave = (item, type) => {
+        if (type === 'create') {
+            onAddItem(item);
+        } else {
+            const newTableItems = [...tableItems];
+            const editedIndex = newTableItems.findIndex(
+                (tableItem) => tableItem._id === item._id
+            );
+            newTableItems[editedIndex] = item;
+
+            setTableItems(newTableItems);
+        }
+
+        reloadItems && reloadItems();
     };
 
     const options = useMemo(() => {
@@ -69,20 +87,26 @@ export const RollTable = ({
     }, [allItems, tableItems]);
 
     return (
-        <div className={styles.rollTableContainer}>
+        <div className={styles.rollTableContainer} style={{ margin }}>
             <div className={styles.rollTableHeader}>
-                <div className={styles.iconButtonContainer} />
+                {!temporary && <div className={styles.iconButtonContainer} />}
                 <div className={styles.rollTableTitle}>{title}</div>
-                <div className={styles.iconButtonContainer}>
-                    <EditIconButton onClick={onTableEdit} />
-                    <DeleteIconButton width={30} onClick={onTableDelete} />
-                </div>
+                {!temporary && (
+                    <div className={styles.iconButtonContainer}>
+                        <EditIconButton onClick={onTableEdit} />
+                        <DeleteIconButton width={30} onClick={onTableDelete} />
+                    </div>
+                )}
             </div>
 
             <div className={styles.createAddContainer}>
                 <div className={styles.addCreateButtonContainer}>
                     <Button
-                        title="Create & Add item"
+                        title={
+                            temporary
+                                ? 'Add temporary item'
+                                : 'Create & Add item'
+                        }
                         onClick={() => setCreateItem(true)}
                         type="success"
                     />
@@ -90,7 +114,9 @@ export const RollTable = ({
                 <div className={styles.addItemContainer}>
                     <SearchDropdown
                         options={options}
-                        placeholder="Add item"
+                        placeholder={
+                            temporary ? 'Add temporary item' : 'Add item'
+                        }
                         onChange={onAddItem}
                         formatOptionLabel={(option) => (
                             <div data-tip={option.description}>
@@ -110,6 +136,8 @@ export const RollTable = ({
                 items={tableItems}
                 showPagination={false}
                 onItemDelete={onRemoveItem}
+                temporary={temporary}
+                hideAdminDesc={hideAdminDesc}
             />
         </div>
     );

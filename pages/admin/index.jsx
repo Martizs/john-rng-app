@@ -8,6 +8,7 @@ import { useContext, useEffect, useMemo } from 'react';
 import styles from './Admin.module.css';
 import { AllItems } from 'components/admin/AllItems';
 import { RollTables } from 'components/admin/RollTables';
+import { Roll } from 'components/admin/Roll';
 
 const TAB_TYPES = {
     allItems: {
@@ -52,17 +53,19 @@ export default function Admin() {
             case TAB_TYPES.rollTables.key:
                 return <RollTables />;
             case TAB_TYPES.roll.key:
-                return <div>Roll div</div>;
+                return <Roll />;
             default:
                 return <div>bruh</div>;
         }
     }, [router.query.tab]);
 
     return (
-        <Auth >
+        <Auth>
             <div className={styles.container}>
                 <div className={styles.logoutContainer}>
-                    <span className={styles.logoutBtn} onClick={logOut}>Log out</span>
+                    <span className={styles.logoutBtn} onClick={logOut}>
+                        Log out
+                    </span>
                 </div>
 
                 <div className={styles.navContainer}>
