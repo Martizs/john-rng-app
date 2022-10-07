@@ -32,7 +32,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className={styles.attributionLink}
                 >
-                    treasure chest clipart PNG Designed By 588ku
+                    Treasure chest clipart PNG Designed By 588ku
                 </a>
             ) : (
                 <a
@@ -41,7 +41,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className={styles.attributionLink}
                 >
-                    treasure chest clipart PNG Designed By 588ku
+                    Treasure chest clipart PNG Designed By 588ku
                 </a>
             )}
             <img
@@ -55,13 +55,23 @@ export default function Home() {
             />
 
             <div className={styles.mainContainer}>
-                {treasureItems.map((treasureItem) => (
-                    <ItemCard
-                        key={treasureItem._id}
-                        title={treasureItem.title}
-                        description={treasureItem.description}
-                    />
-                ))}
+                {openChest && (
+                    <>
+                        {treasureItems.length ? (
+                            <>
+                                {treasureItems.map((treasureItem) => (
+                                    <ItemCard
+                                        key={treasureItem._id}
+                                        title={treasureItem.title}
+                                        description={treasureItem.description}
+                                    />
+                                ))}
+                            </>
+                        ) : (
+                            <div>Chest is empty :( </div>
+                        )}
+                    </>
+                )}
             </div>
         </div>
     );
