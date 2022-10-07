@@ -151,7 +151,11 @@ export const RollTables = () => {
                     ))}
                 </div>
             )}
-            <Modal isOpen={!!addEditTable} onRequestClose={handleAddEditClose}>
+            <Modal
+                isOpen={!!addEditTable}
+                onRequestClose={handleAddEditClose}
+                width="100%"
+            >
                 {addEditTable && (
                     <div className={styles.addModalContainer}>
                         <InputField
