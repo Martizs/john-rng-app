@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { ItemCard } from 'components/ItemCard';
 import { showError } from 'lib/ui/utils';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
@@ -21,9 +21,15 @@ export default function Home() {
 
     return (
         <div className={styles.container}>
-            <Link href="/admin">
-                <a>go to admin</a>
-            </Link>
+            <div className={styles.mainContainer}>
+                {treasureItems.map((treasureItem) => (
+                    <ItemCard
+                        key={treasureItem._id}
+                        title={treasureItem.title}
+                        description={treasureItem.description}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
