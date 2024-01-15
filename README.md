@@ -1,5 +1,5 @@
 # John RPG app
-1) A random item list generation app I've made for my friend John.
+1) A random item list generation app I've made for my friend John. Uses nextjs + mongoose + mongoDB.
 2) He was supposed to use this to GM a pen and pencil boardgame for us. JOHN!
 3) Currently its not beeing used xD , so you might see some errors on the website itself as the database has gone to sleep and really there's nothing too much to see there unless you can actually log-in as an admin and add some items and showcase them.
 4) The way this website would work is that an admin would create items, then create lists of items where initially added items would be randomized, then the players would connect on the main page with the treasure chest, open it and would see the loot they've received.
